@@ -30,4 +30,6 @@ Route::put('/users/{user}',[UserController::class,'update']);
 
 Route::get('/posts',[PostController::class,'index']);
 Route::post('/posts',[PostController::class,'store']);
-Route::put('/posts/{post}',[PostController::class,'update']);
+Route::post('/posts/{post}',[PostController::class,'update']);
+Route::get('/posts/{id}/delete',[PostController::class,'destroy']);
+Route::get('{user_id}/posts',[PostController::class,'UserPost']);

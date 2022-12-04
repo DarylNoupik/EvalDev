@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-Use App\Models\Post;
+use App\Models\Post;
+use App\Models\User;
 
 class PostController extends Controller
 {
@@ -12,7 +13,7 @@ class PostController extends Controller
         return response()->json($post);
     }
 
-public function store(){
+public function store(Request $request){
 
 
               $this->validate($request, [
@@ -21,9 +22,10 @@ public function store(){
                         ]);
 
                         // . On enregistre les informations du Post
-                        $post=Post::create([
+                    $post = Post::create([
                             "title" => $request->title,
                             "content" => $request->content,
+                            "user_id" => $request->user_id,
                         ]);
 
                         // 4. On retourne vers tous les posts : route("posts.index")
@@ -32,7 +34,7 @@ public function store(){
 
 public function edit(){}
 
-public function update($id){
+public function update($id,Request $request){
     $post = Post::find($id);
 
     $this->validate($request, [
@@ -42,7 +44,7 @@ public function update($id){
 
     $post->update(["title" => $request->title,
         "content" => $request->content]);
-
+return response()->json($post);
     }
 
     public function destroy($id){
@@ -51,5 +53,8 @@ public function update($id){
       return response()->json(["status" => "success"]);
     }
 
-    public function UserPost(){}
+    public function UserPost($id){
+      $posts = Post::Where("user_id",$id)->get();
+      return response()->json($posts);
+    }
 }
