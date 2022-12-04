@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 Use App\Models\Post;
 
 class PostController extends Controller
 {
-    public function show(){
+    public function index(){
       $post = Post::all();
         return response()->json($post);
     }
